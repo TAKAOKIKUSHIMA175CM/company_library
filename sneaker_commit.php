@@ -2,15 +2,21 @@
 require_once 'error_report.php';
 require_once 'db.php';
 
-if($_POST['id'] == ""){
+
+ $id = $_POST['id'];
+ $brand = $_POST['brand'];
+ $size = $_POST['size'];
+ $price = $_POST['price'];
+
+if($id == ""){
 	$stmt = $pdo->prepare('INSERT INTO sneaker(brand, size, price) VALUES (:brand, :size, :price)');
 } else {
 	$stmt = $pdo->prepare('UPDATE sneaker SET brand=:brand, size=:size, price=:price WHERE id=:id');
-	$stmt->bindParam(':id', $_POST['id']);
+	$stmt->bindParam(':id', $id);
 }
-$stmt->bindParam(':brand', $_POST['brand']);
-$stmt->bindParam(':size', $_POST['size']);
-$stmt->bindParam(':price', $_POST['price']);
+$stmt->bindParam(':brand', $brand);
+$stmt->bindParam(':size', $size);
+$stmt->bindParam(':price', $price);
 $stmt->execute();
 ?>
 
@@ -22,14 +28,13 @@ $stmt->execute();
 		<h3>登録完了しました</h3>
 			<table>
 				<tr>
-					<?php print_r($_POST); ?>
-					<td>ブランド：<?php echo $_POST['brand']; ?></td>
+					<td>ブランド：<?php echo $brand; ?></td>
 				</tr>
 				<tr>
-					<td>サイズ：<?php echo $_POST['size']; ?></td>
+					<td>サイズ：<?php echo $size; ?></td>
 				</tr>
 				<tr>
-					<td>価格：<?php echo $_POST['price']; ?></td>
+					<td>価格：<?php echo $price; ?></td>
 				</tr>
 			</table>
 			<a href = "/sneaker_sample.php">新規作成</a><br>
