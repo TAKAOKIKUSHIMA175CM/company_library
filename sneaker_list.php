@@ -5,14 +5,16 @@ require_once 'db.php';
 $stmt = $pdo->prepare('SELECT * FROM sneaker');
 $stmt->execute();
 
-$total = $pdo->prepare('SELECT COUNT(*) FROM sneaker');
+
+$total = $pdo->query('SELECT COUNT(*) FROM sneaker');
+
 $cnt = $total->fetchColumn();
 
 if(is_float($cnt/10)){
 	$page = floor($cnt/10);
 	$page++;
 }
-print_r($page);
+
 ?>
 
 <html>
