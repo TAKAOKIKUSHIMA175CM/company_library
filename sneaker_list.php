@@ -5,7 +5,9 @@ require_once 'db.php';
 $stmt = $pdo->prepare('SELECT * FROM sneaker');
 $stmt->execute();
 
+
 $total = $pdo->query('SELECT COUNT(*) FROM sneaker');
+
 $cnt = $total->fetchColumn();
 
 if(is_float($cnt/10)){
