@@ -13,6 +13,17 @@ if(is_float($cnt/10)){
 	$page++;
 }
 
+$get = (int)$_GET['page'];
+if($get == "" || $get == 0){
+	$get = 1;
+}
+
+$sstmt = $pdo->prepare('SELECT * FROM sneaker LIMIT :min, 10');
+$min = ($get*10)-10;
+$sstmt->bindParam(':min', $min);
+$sstmt->execute();
+$rows = $sstmt->fetchAll();
+
 ?>
 
 <html>
@@ -30,7 +41,7 @@ if(is_float($cnt/10)){
 					<td>#</td>
 				</tr>
 			</thead>
-		<?php foreach($stmt as $row): ?>
+		<?php foreach($rows as $row): ?>
 			<tbody>
 				<tr>
 					<td><?php echo $row['id']; ?></td>
@@ -45,5 +56,6 @@ if(is_float($cnt/10)){
 		<?php for($i=1; $i<=$page; $i++): ?>
 			<a href="/sneaker_list.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
 		<?php endfor; ?>
+
 	</body>
 </html>
