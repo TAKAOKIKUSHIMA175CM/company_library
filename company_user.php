@@ -1,3 +1,9 @@
+<?php
+require_once 'error_report.php';
+require_once 'company_library_db.php';
+
+?>
+
 <html>
 	<head>
 		<title>company_user.php</title>

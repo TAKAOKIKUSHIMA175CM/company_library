@@ -1,5 +1,7 @@
 <?php
 
+require_once 'error_report.php';
+
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -22,5 +24,12 @@ $password = $_POST['password'];
 			<tr>
 				<td>パスワード：<?php echo $password; ?></td>
 			</tr>
+		</table>
+			<form method="post" action="/company_user_commit.php">
+				<p><input type="hidden" name="name" value="<?php echo $name; ?>"></p>
+				<p><input type="hidden" name="email" value="<?php echo $email; ?>"></p>
+				<p><input type="hidden" name="password" value="<?php echo $password; ?>"></p>
+				<p><input type="submit" value="送信"></p>
+			</form>
 	</body>
 </html>
