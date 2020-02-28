@@ -2,11 +2,17 @@
 require_once 'error_report.php';
 require_once 'company_library_db.php';
 
+$id = $_POST['id'];
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$stmt = $pdo->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+if($id == "") {
+	$stmt = $pdo->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+} else {
+	$stmt = $pdo->prepare('UPDATE users SET name=:name, email=:email, password=:password WHERE id=:id');
+	$stmt->bindparam(':id', $id);
+}
 $stmt->bindParam(':name', $name);
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password', $password);
@@ -38,5 +44,6 @@ $stmt->execute();
 		</table>
 		<p>登録が完了いたしました</p>
 		<a href="/company_user.php">新規登録</a>
+		<a href="/company_user_list.php">ユーザー一覧</a>
 	</body>
 </html>
