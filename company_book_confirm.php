@@ -27,10 +27,9 @@ $stock = $_POST['stock'];
 
 		<form method="post" action="/company_book_commit.php">
 			<input type="hidden" name="name" value="<?php echo $name; ?>">
-			<input type="hidden" name="name" value="<?php echo $author; ?>">
-			<input type="hidden" name="name" value="<?php echo $stock; ?>">
+			<input type="hidden" name="author" value="<?php echo $author; ?>">
+			<input type="hidden" name="stock" value="<?php echo $stock; ?>">
 			<input type="submit" value="送信">
 		</form>
-
 	</body>
 </html>
