@@ -1,5 +1,6 @@
 <?php
 
+$id = $_POST['id'];
 $name = $_POST['name'];
 $author = $_POST['author'];
 $stock = $_POST['stock'];
@@ -26,6 +27,7 @@ $stock = $_POST['stock'];
 		</table>
 
 		<form method="post" action="/company_book_commit.php">
+			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<input type="hidden" name="name" value="<?php echo $name; ?>">
 			<input type="hidden" name="author" value="<?php echo $author; ?>">
 			<input type="hidden" name="stock" value="<?php echo $stock; ?>">

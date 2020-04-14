@@ -7,7 +7,12 @@ $name = $_POST['name'];
 $author = $_POST['author'];
 $stock = $_POST['stock'];
 
-$stmt = $pdo->prepare('INSERT INTO books (name, author, stock) VALUES (:name, :author, :stock)');
+if($id == "") {
+	$stmt = $pdo->prepare('INSERT INTO books (name, author, stock) VALUES (:name, :author, :stock)');
+} else {
+	$stmt = $pdo->prepare('UPDATE books SET name = :name, author = :author, stock = :stock WHERE id = :id');
+	$stmt->bindParam(':id', $id);
+}
 $stmt->bindParam(':name', $name);
 $stmt->bindParam(':author', $author);
 $stmt->bindParam(':stock', $stock);
