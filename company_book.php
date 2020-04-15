@@ -17,8 +17,8 @@ var_dump($row);
 	<head>
 		<title>company_book.php</title>
 	</head>
-		<h3>本の新規登録</h3>
 	<body>
+		<h3>本の新規登録</h3>
 		<form method=post action="/company_book_confirm.php">
 			<?php if($id == ""): ?>
 				<p>本のタイトル：<input type="text" name="name" value=""></p>

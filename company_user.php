@@ -9,6 +9,7 @@ $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');
 $stmt->bindParam(':id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+//fetch(PDO::FETCH_ASSOC)で配列を返している
 var_dump($_GET);
 
 
@@ -34,5 +35,6 @@ var_dump($_GET);
 				<?php endif; ?>
 					<p><input type="submit" value="送信"></p>
 			</form>
+				<a href="/company_book_list.php">書籍一覧</a>
 	</body>
 </html>

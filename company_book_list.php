@@ -41,6 +41,7 @@ $rows = $pages->fetchAll();
 						<td>タイトル</td>
 						<td>著者</td>
 						<td>在庫</td>
+						<td></td>
 					</tr>
 				</thead>
 		<?php foreach($rows as $row): ?>
@@ -50,7 +51,8 @@ $rows = $pages->fetchAll();
 						<td><?php echo $row['name']; ?></td>
 						<td><?php echo $row['author']; ?></td>
 						<td><?php echo $row['stock']; ?></td>
-						<td><a href="/company_book.php?id=<?php echo $row['id'] ?>">編集</a>
+						<td><a href="/company_book.php?id=<?php echo $row['id'] ?>">編集</a></td>
+						<td><a href="/company_rent.php?book_id=<?php echo $row['id'] ?>">借りる</a>
 					</tr>
 				</tbody>
 		<?php endforeach; ?>
