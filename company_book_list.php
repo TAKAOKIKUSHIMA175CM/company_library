@@ -25,7 +25,6 @@ $pages->bindParam(':min', $min);
 $pages->execute();
 $rows = $pages->fetchAll();
 
-
 ?>
 
 <html>
@@ -42,6 +41,7 @@ $rows = $pages->fetchAll();
 						<td>著者</td>
 						<td>在庫</td>
 						<td></td>
+						<td></td>
 					</tr>
 				</thead>
 		<?php foreach($rows as $row): ?>
@@ -51,15 +51,19 @@ $rows = $pages->fetchAll();
 						<td><?php echo $row['name']; ?></td>
 						<td><?php echo $row['author']; ?></td>
 						<td><?php echo $row['stock']; ?></td>
-						<td><a href="/company_book.php?id=<?php echo $row['id'] ?>">編集</a></td>
-						<td><a href="/company_rent.php?book_id=<?php echo $row['id'] ?>">借りる</a>
+						<td><a href="/company_book.php?id=<?php echo $row['id']; ?>">編集</a></td>
+					<?php if($row['stock'] == "" || $row['stock'] <= 0): ?>
+						<td>在庫なし</td>
+					<?php else: ?>
+						<td><a href="/company_rent.php?book_id=<?php echo $row['id']; ?>">借りる</a></td>
+					<?php endif; ?>
 					</tr>
 				</tbody>
 		<?php endforeach; ?>
 			</table>
 				<p><a href="/company_book.php">書籍新規登録</a></p>
 		<?php for($i = 1; $i <= $page; $i++): ?>
-			<a href="/company_book_list.php?page=<?php echo $i ?>"><?php echo $i ?></a>
+			<a href="/company_book_list.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
 		<?php endfor; ?>
 	</body>
 </html>

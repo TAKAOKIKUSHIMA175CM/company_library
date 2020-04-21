@@ -55,7 +55,7 @@ $rows = $pages->fetchAll();
 					<td><?php echo $row['created_at']; ?></td>
 					<td><?php echo $row['return_at']; ?></td>
 					<td><?php echo $row['num']; ?></td>
-					<td><a href="/company_rent.php?id=<?php echo $row['id']; ?>">返却する</a></td>
+					<td><a href="/company_return.php?id=<?php echo $row['id']; ?>">返却する</a></td>
 				</th>
 			</tbody>
 		<?php endforeach; ?>

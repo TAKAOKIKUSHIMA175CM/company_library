@@ -13,6 +13,12 @@ $book_name = $_POST['name'];
 $author = $_POST['author'];
 $stock = $_POST['stock'];
 
+if ($stock - $num < 0) {
+	echo "在庫が足りません";
+} else {
+	$stocks = $stock - $num;
+}
+
 ?>
 
 <html>
@@ -47,7 +53,7 @@ $stock = $_POST['stock'];
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<input type="hidden" name="name" value="<?php echo $book_name; ?>">
 			<input type="hidden" name="author" value="<?php echo $author; ?>">
-			<input type="hidden" name="stock" value="<?php echo $stock; ?>">
+			<input type="hidden" name="stock" value="<?php echo $stocks; ?>">
 
 			<input type="submit" value="送信">
 		</form>
