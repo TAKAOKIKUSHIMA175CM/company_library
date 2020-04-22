@@ -16,6 +16,11 @@ $rent_flag = $_POST['rent_flag'];
 $book_stmt = $pdo->prepare('SELECT name FROM books');
 $book_stmt->execute();
 
+$stock_stmt = $pdo->prepare('UPDATE books SET stock = :stock WHERE id = :book_id');
+$stock_stmt->bindParam(':book_id', $id);
+$stock_stmt->bindParam(':stock', $stock);
+$stock_stmt->execute();
+
 $stmt = $pdo->prepare('INSERT INTO rents (return_at, num, user_id, book_id, rent_flag) VALUES (:return_at, :num, :user_id, :book_id, :rent_flag)');
 $stmt->bindParam(':return_at', $return_at);
 $stmt->bindParam(':num', $num);

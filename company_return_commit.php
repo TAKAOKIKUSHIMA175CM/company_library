@@ -3,23 +3,25 @@ require_once 'error_report.php';
 require_once 'company_library_db.php';
 
 $id = $_POST['id'];
-$book_name = $_POST['book_name'];
+$book_name = $_POST['name'];
 $user_id = $_POST['user_id'];
 $user_name = $_POST['user_name'];
 $created_at = $_POST['created_at'];
 $return_at = $_POST['return_at'];
 $num = $_POST['num'];
 $rent_flag = $_POST['rent_flag'];
+$stock = $_POST['stock'];
 
-$stmt = $pdo->prepare('SELECT rents.id, rents.user_id, rents.created_at, rents.return_at, rents.num, rents.rent_flag, books.name AS book_name, users.name AS user_name FROM rents JOIN books ON rents.book_id = books.id LEFT JOIN users ON rents.user_id = users.id');
+$stmt = $pdo->prepare('SELECT rents.id, rents.user_id, rents.created_at, rents.return_at, rents.num, rents.rent_flag, books.stock, books.name AS book_name, users.name AS user_name FROM rents JOIN books ON rents.book_id = books.id LEFT JOIN users ON rents.user_id = users.id');
 $stmt->execute();
 $row = $stmt->fetch();
 var_dump($row);
 
 
-$sstmt = $pdo->prepare('UPDATE rents SET rent_flag = :rent_flag WHERE id = :id');
+$sstmt = $pdo->prepare('UPDATE rents INNER JOIN books ON rents.book_id = books.id SET rents.rent_flag = :rent_flag, books.stock = :stock WHERE rents.id = :id');
 $sstmt->bindParam(':id', $id);
 $sstmt->bindParam(':rent_flag', $rent_flag);
+$sstmt->bindParam(':stock', $stock);
 $sstmt->execute();
 
 ?>

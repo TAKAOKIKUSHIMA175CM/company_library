@@ -13,7 +13,7 @@ $book_name = $_POST['name'];
 $author = $_POST['author'];
 $stock = $_POST['stock'];
 
-if ($stock - $num < 0) {
+if ($no_stock = $stock - $num < 0) {
 	echo "在庫が足りません";
 } else {
 	$stocks = $stock - $num;
@@ -27,6 +27,10 @@ if ($stock - $num < 0) {
 	</head>
 	<body>
 		<h3>確認</h3>
+	<?php if($no_stock): ?>
+		<p>＊在庫を確認し、レンタルを行って下さい</p>
+			<a href="/company_book_list.php">書籍一覧へ戻る</a>
+	<?php else: ?>
 		<table>
 			<tr>
 				<td>ユーザーID：<?php echo $user_id; ?></td>
@@ -41,7 +45,6 @@ if ($stock - $num < 0) {
 				<td>レンタル冊数：<?php echo $num; ?></td>
 			</tr>
 		</table>
-
 		<form method="post" action="/company_rent_commit.php">
 			<input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
 			<input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
@@ -57,5 +60,6 @@ if ($stock - $num < 0) {
 
 			<input type="submit" value="送信">
 		</form>
+	<?php endif; ?>
 	</body>
 </html>
