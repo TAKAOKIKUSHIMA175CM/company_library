@@ -52,6 +52,7 @@ $rows = $pages->fetchAll();
 					<td><?php echo $row['email']; ?></td>
 					<td><?php echo $row['password']; ?></td>
 					<td><a href="/company_user.php?id=<?php echo $row['id']; ?>">編集</a></td>
+					<td><a href="/company_user_history.php?id=<?php echo $row['id']; ?>">レンタル履歴</a></td>
 				</tr>
 			</tbody>
 		<?php endforeach; ?>

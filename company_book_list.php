@@ -62,6 +62,8 @@ $rows = $pages->fetchAll();
 		<?php endforeach; ?>
 			</table>
 				<p><a href="/company_book.php">書籍新規登録</a></p>
+				<p><a href="/company_rent_list.php">貸出し中一覧</a></p>
+				<p><a href="company_rent_history.php">貸出し履歴</a></p>
 		<?php for($i = 1; $i <= $page; $i++): ?>
 			<a href="/company_book_list.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
 		<?php endfor; ?>
