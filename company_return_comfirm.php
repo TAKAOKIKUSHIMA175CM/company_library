@@ -1,6 +1,15 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
+
+if (!isset($_SESSION["login"])) {
+  header("Location: company_user_login.php");
+  exit();
+}
+
+$message = $_SESSION['login']."さんはログイン中です";
+$message = htmlspecialchars($message);
 
 $id = $_POST['id'];
 $book_name = $_POST['book_name'];
@@ -24,6 +33,7 @@ if ($num >= 0) {
 		<title>company_return_confirm.php</title>
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<table>
 			<thead>
 				<tr>

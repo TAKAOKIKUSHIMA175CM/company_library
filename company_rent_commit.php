@@ -1,6 +1,10 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
+
+$message = $_SESSION['login']."さんはログイン中です";
+$message = htmlspecialchars($message);
 
 $return_at = $_POST['return_at'];
 $num = $_POST['num'];
@@ -12,6 +16,7 @@ $book_name = $_POST['name'];
 $author = $_POST['author'];
 $stock = $_POST['stock'];
 $rent_flag = $_POST['rent_flag'];
+$login_flag = $_POST['login_flag'];
 
 $book_stmt = $pdo->prepare('SELECT name FROM books');
 $book_stmt->execute();
@@ -39,6 +44,7 @@ var_dump($row);
 		<title>company_rent_commit.php</title>
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<table>
 			<thead>
 				<tr>
@@ -58,8 +64,10 @@ var_dump($row);
 			</tbody>
 		</table>
 			<p>登録が完了しました</p>
-			<p><a href="/company_book_list.php">追加でレンタルする</a></p>
-			<p><a href="/company_rent_list.php">貸出し中一覧</a>
+			<p><a href="/company_book_list.php?id=<?php echo $user_id; ?>">追加でレンタルする</a></p>
+			<?php if ($login_flag == 2): ?>
+				<p><a href="/company_rent_list.php">貸出し中一覧</a>
+			<?php endif; ?>
 	</body>
 </html>
 

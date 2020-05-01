@@ -1,6 +1,15 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
+
+if (!isset($_SESSION["login"])) {
+  header("Location: company_user_login.php");
+  exit();
+}
+
+$message = $_SESSION['login']."さんはログイン中です";
+$message = htmlspecialchars($message);
 
 $stmt = $pdo->prepare('SELECT * FROM books');
 $stmt->execute();
@@ -25,6 +34,11 @@ $pages->bindParam(':min', $min);
 $pages->execute();
 $rows = $pages->fetchAll();
 
+// $id = $_GET['id'];
+
+$id = $_SESSION['id'];
+$id = htmlspecialchars($id);
+
 ?>
 
 <html>
@@ -32,6 +46,7 @@ $rows = $pages->fetchAll();
 		company_book_list.php
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<h3>書籍一覧</h3>
 			<table>
 				<thead>
@@ -55,7 +70,7 @@ $rows = $pages->fetchAll();
 					<?php if($row['stock'] == "" || $row['stock'] <= 0): ?>
 						<td>在庫なし</td>
 					<?php else: ?>
-						<td><a href="/company_rent.php?book_id=<?php echo $row['id']; ?>">借りる</a></td>
+						<td><a href="/company_rent.php?book_id=<?php echo $row['id']; ?>.&id=<?php echo $id; ?>">借りる</a></td>
 					<?php endif; ?>
 					</tr>
 				</tbody>
@@ -64,6 +79,7 @@ $rows = $pages->fetchAll();
 				<p><a href="/company_book.php">書籍新規登録</a></p>
 				<p><a href="/company_rent_list.php">貸出し中一覧</a></p>
 				<p><a href="company_rent_history.php">貸出し履歴</a></p>
+				<p><a href="company_user_history.php">マイページへ</a></p>
 		<?php for($i = 1; $i <= $page; $i++): ?>
 			<a href="/company_book_list.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
 		<?php endfor; ?>

@@ -6,6 +6,7 @@ $id = $_POST['id'];
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
+$login_flag = $_POST['login_flag'];
 
 ?>
 
@@ -31,6 +32,7 @@ $password = $_POST['password'];
 				<input type="hidden" name="name" value="<?php echo $name; ?>">
 				<input type="hidden" name="email" value="<?php echo $email; ?>">
 				<input type="hidden" name="password" value="<?php echo $password; ?>">
+				<input type="hidden" name="login_flag" value="<?php echo $login_flag; ?>">
 				<input type="submit" value="送信">
 			</form>
 	</body>

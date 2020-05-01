@@ -1,6 +1,15 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
+
+if (!isset($_SESSION["login"])) {
+  header("Location: company_user_login.php");
+  exit();
+}
+
+$message = $_SESSION['login']."さんはログイン中です";
+$message = htmlspecialchars($message);
 
 $id = $_GET['id'];
 
@@ -17,6 +26,7 @@ $row['rent_flag'] = 0;
 		<title>company_return.php</title>
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<table>
 			<thead>
 				<tr>

@@ -1,8 +1,26 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
 
-$id = $_GET['id'];
+if (!isset($_SESSION["login"])) {
+  header("Location: company_user_login.php");
+  exit();
+}
+
+$message = $_SESSION['login']."さんようこそ";
+$message = htmlspecialchars($message);
+
+// $id = 'セッションIDは '.$_COOKIE['PHPSESSID'].' 。';
+// $id = htmlspecialchars($id);
+
+$id = $_SESSION['id'];
+$id = htmlspecialchars($id);
+
+
+$name = $_SESSION['login'];
+$name = htmlspecialchars($name);
+
 
 $pages = $pdo->prepare('SELECT rents.id, rents.user_id, rents.created_at, rents.return_at, rents.rent_flag, rents.num, books.name AS book_name, users.name AS user_name FROM rents JOIN books ON rents.book_id = books.id LEFT JOIN users ON rents.user_id = users.id WHERE users.id = :id');
 $pages->bindParam(':id', $id);
@@ -17,6 +35,7 @@ $rows = $pages->fetchAll();
 		<title>company_user_history.php</title>
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<table>
 			<thead>
 				<th>
@@ -50,8 +69,9 @@ $rows = $pages->fetchAll();
 			</tbody>
 		<?php endforeach; ?>
 		</table>
-			<p><a href="/company_book_list.php">書籍一覧</a></p>
-			<p><a href="/company_user_list.php">戻る</a></p>
+			<p><a href="/company_book_list.php?id=<?php echo $id; ?>">書籍一覧</a></p>
+			<p><a href="/company_user_list.php">ユーザー一覧</a></p>
+			<p><a href="/company_user_logout.php">ログアウトする</a></p>
 			<?php for ($i=1; $i<=$page; $i++): ?>
 				<a href="/company_rent_list.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
 			<?php endfor; ?>

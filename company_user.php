@@ -12,7 +12,6 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 //fetch(PDO::FETCH_ASSOC)で配列を返している
 var_dump($_GET);
 
-
 ?>
 
 <html>
@@ -27,6 +26,7 @@ var_dump($_GET);
 					<p>名前：<input type="text" name="name" value=""></p>
 					<p>メールアドレス：<input type="text" name="email" value=""></p>
 					<p>パスワード：<input type="text" name="password" value=""></p>
+					<input type="hidden" name="login_flag" value="1">
 				<?php else: ?>
 					<input type="text" name="id" value="<?php echo $row['id']; ?>">
 					<p>名前：<input type="text" name="name" value="<?php echo $row['name']; ?>"></p>
