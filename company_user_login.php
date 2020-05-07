@@ -82,6 +82,7 @@ else {
       session_regenerate_id(TRUE); //セッションidを再発行
       $_SESSION["login"] = $_POST['name']; //セッションにログイン情報を登録
       $_SESSION["id"] = $result['id'];
+      $_SESSION["login_flag"] = $result['login_flag'];
       header("Location: http://localhost:8080/company_user_history.php"); //ログイン後のページにリダイレクト
       exit();
     }

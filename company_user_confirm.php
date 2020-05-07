@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'error_report.php';
 
 $id = $_POST['id'];
@@ -33,7 +33,7 @@ $login_flag = $_POST['login_flag'];
 				<input type="hidden" name="email" value="<?php echo $email; ?>">
 				<input type="hidden" name="password" value="<?php echo $password; ?>">
 				<input type="hidden" name="login_flag" value="<?php echo $login_flag; ?>">
-				<input type="submit" value="送信">
+				<input type="submit" name="signup" value="会員登録">
 			</form>
 	</body>
 </html>

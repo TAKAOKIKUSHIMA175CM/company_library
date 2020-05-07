@@ -1,6 +1,15 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
+
+//ログイン状態の場合ログイン後のページにリダイレクト
+if (isset($_SESSION["login"])) {
+  session_regenerate_id(TRUE);
+  header("Location: company_user_history.php");
+  exit();
+}
+
 
 $id = $_GET['id'];
 
@@ -33,7 +42,7 @@ var_dump($_GET);
 					<p>メールアドレス：<input type="text" name="email" value="<?php echo $row['email']; ?>"></p>
 					<p>パスワード：<input type="text" name="password" value="<?php echo $row['password']; ?>"></p>
 				<?php endif; ?>
-					<p><input type="submit" value="送信"></p>
+					<p><input type="submit" name="signup" value="会員登録する"></p>
 			</form>
 				<a href="/company_book_list.php">書籍一覧</a>
 	</body>

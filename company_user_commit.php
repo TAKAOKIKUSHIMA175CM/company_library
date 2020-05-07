@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'error_report.php';
 require_once 'company_library_db.php';
 
@@ -22,6 +23,14 @@ $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password', $hash_pass);
 $stmt->bindParam(':login_flag', $login_flag);
 $stmt->execute();
+
+if ($stmt != "") {
+	echo "登録が完了いたしました";
+} else {
+	echo "エラーが発生しました。";
+}
+session_regenerate_id(TRUE); //セッションidを再発行
+$_SESSION["login"] = $_POST['name']; //セッションにログイン情報を登録
 
 ?>
 
@@ -49,7 +58,7 @@ $stmt->execute();
 		</table>
 			<p>登録が完了いたしました</p>
 		<?php if($login_flag == 1): ?>
-			<a href="/company_user_commit_sec.php?id=<?php echo $id; ?>">個人情報確認ページへ</a>
+			<a href="company_user_history.php">マイページへ</a>
 		<?php endif; ?>
 		<?php if($login_flag == 2): ?>
 			<a href="/company_user.php">新規登録</a>
