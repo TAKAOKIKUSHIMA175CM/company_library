@@ -2,6 +2,9 @@
 session_start();
 require_once 'error_report.php';
 
+$message = $_SESSION['login']."さんはログイン中です。";
+$message = htmlspecialchars($message);
+
 $id = $_POST['id'];
 $name = $_POST['name'];
 $email = $_POST['email'];
@@ -15,6 +18,7 @@ $login_flag = $_POST['login_flag'];
 		<title>company_user_confirm.php</title>
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<h3>確認</h3>
 		<table>
 			<tr>
@@ -33,7 +37,7 @@ $login_flag = $_POST['login_flag'];
 				<input type="hidden" name="email" value="<?php echo $email; ?>">
 				<input type="hidden" name="password" value="<?php echo $password; ?>">
 				<input type="hidden" name="login_flag" value="<?php echo $login_flag; ?>">
-				<input type="submit" name="signup" value="会員登録">
+				<input type="submit" name="signup" value="確定">
 			</form>
 	</body>
 </html>

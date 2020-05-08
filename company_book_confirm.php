@@ -3,6 +3,7 @@
 $id = $_POST['id'];
 $name = $_POST['name'];
 $author = $_POST['author'];
+$genre = $_POST['genre'];
 $stock = $_POST['stock'];
 
 ?>
@@ -22,6 +23,9 @@ $stock = $_POST['stock'];
 				<td>著者：<?php echo $author; ?></td>
 			</tr>
 			<tr>
+				<td>ジャンル：<?php echo $genre; ?></td>
+			</tr>
+			<tr>
 				<td>在庫：<?php echo $stock; ?></td>
 			</tr>
 		</table>
@@ -30,6 +34,7 @@ $stock = $_POST['stock'];
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<input type="hidden" name="name" value="<?php echo $name; ?>">
 			<input type="hidden" name="author" value="<?php echo $author; ?>">
+			<input type="hidden" name="genre" value="<?php echo $genre; ?>">
 			<input type="hidden" name="stock" value="<?php echo $stock; ?>">
 			<input type="submit" value="送信">
 		</form>

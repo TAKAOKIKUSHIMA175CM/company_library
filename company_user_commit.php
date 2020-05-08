@@ -4,6 +4,7 @@ require_once 'error_report.php';
 require_once 'company_library_db.php';
 
 $hash_pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$hash_pass = htmlspecialchars($hash_pass);
 
 $id = $_POST['id'];
 $name = $_POST['name'];
@@ -15,13 +16,16 @@ $login_flag = $_POST['login_flag'];
 if($id == "") {
 	$stmt = $pdo->prepare('INSERT INTO users (name, email, password, login_flag) VALUES (:name, :email, :password, :login_flag)');
 } else {
-	$stmt = $pdo->prepare('UPDATE users SET name=:name, email=:email, password=:password WHERE id=:id');
+	$stmt = $pdo->prepare('UPDATE users SET name=:name, email=:email, password=:password, login_flag=:login_flag WHERE id=:id');
 	$stmt->bindparam(':id', $id);
 }
 $stmt->bindParam(':name', $name);
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password', $hash_pass);
 $stmt->bindParam(':login_flag', $login_flag);
+// if ($hash_pass == "") {
+// 	$stmt->bindParam(':password', $password);
+// }
 $stmt->execute();
 
 if ($stmt != "") {
@@ -30,7 +34,8 @@ if ($stmt != "") {
 	echo "エラーが発生しました。";
 }
 session_regenerate_id(TRUE); //セッションidを再発行
-$_SESSION["login"] = $_POST['name']; //セッションにログイン情報を登録
+$message = $_SESSION['login']."さんはログイン中です。";
+$message = htmlspecialchars($message);
 
 ?>
 
@@ -40,6 +45,7 @@ $_SESSION["login"] = $_POST['name']; //セッションにログイン情報を�
 		<title>company_user_commit.php</title>
 	</head>
 	<body>
+		<div class="message"><?php echo $message;?></div>
 		<table>
 			<thead>
 				<tr>

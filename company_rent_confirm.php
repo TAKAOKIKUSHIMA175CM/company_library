@@ -17,6 +17,7 @@ $login_flag = $_POST['login_flag'];
 $id = $_POST['id'];
 $book_name = $_POST['name'];
 $author = $_POST['author'];
+$genre = $_POST['genre'];
 $stock = $_POST['stock'];
 
 if ($no_stock = $stock - $num < 0) {
@@ -64,6 +65,7 @@ if ($no_stock = $stock - $num < 0) {
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
 			<input type="hidden" name="name" value="<?php echo $book_name; ?>">
 			<input type="hidden" name="author" value="<?php echo $author; ?>">
+			<input type="hidden" name="genre" value="<?php echo $genre; ?>">
 			<input type="hidden" name="stock" value="<?php echo $stocks; ?>">
 
 			<input type="submit" value="送信">

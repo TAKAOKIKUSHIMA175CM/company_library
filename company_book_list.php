@@ -54,6 +54,7 @@ $id = htmlspecialchars($id);
 						<td>ID</td>
 						<td>タイトル</td>
 						<td>著者</td>
+						<td>ジャンル</td>
 						<td>在庫</td>
 						<td></td>
 						<td></td>
@@ -64,7 +65,8 @@ $id = htmlspecialchars($id);
 					<tr>
 						<td><?php echo $row['id']; ?></td>
 						<td><?php echo $row['name']; ?></td>
-						<td><?php echo $row['author']; ?></td>
+						<td><a href="/company_book_genre.php?author=<?php echo $row['author']; ?>"><?php echo $row['author']; ?></a></td>
+						<td><a href="/company_book_genre.php?genre=<?php echo $row['genre']; ?>"><?php echo $row['genre']; ?></a></td>
 						<td><?php echo $row['stock']; ?></td>
 						<td><a href="/company_book.php?id=<?php echo $row['id']; ?>">編集</a></td>
 					<?php if($row['stock'] == "" || $row['stock'] <= 0): ?>

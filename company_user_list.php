@@ -52,12 +52,14 @@ $rows = $pages->fetchAll();
 					<td><?php echo $row['email']; ?></td>
 					<td><?php echo $row['password']; ?></td>
 					<td><a href="/company_user.php?id=<?php echo $row['id']; ?>">編集</a></td>
-					<td><a href="/company_user_history.php?id=<?php echo $row['id']; ?>">レンタル履歴</a></td>
+					<td><a href="/company_personal_history.php?id=<?php echo $row['id']; ?>">レンタル履歴</a></td>
 				</tr>
 			</tbody>
 		<?php endforeach; ?>
 		</table>
 			<p><a href="/company_user.php">新規作成ページへ</a></p>
+			<p><a href="/company_book_list.php">書籍一覧</a></p>
+			<p><a href="/company_user_history.php">マイページへ</a></p>
 			<?php for($i=1; $i<=$page; $i++): ?>
 				<a href="/company_user_list.php?page=<?php echo $i ?>"><?php echo $i ?></a>
 			<?php endfor; ?>

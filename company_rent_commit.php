@@ -14,6 +14,7 @@ $book_id = $_POST['book_id'];
 $id = $_POST['id'];
 $book_name = $_POST['name'];
 $author = $_POST['author'];
+$genre = $_POST['genre'];
 $stock = $_POST['stock'];
 $rent_flag = $_POST['rent_flag'];
 $login_flag = $_POST['login_flag'];

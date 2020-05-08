@@ -23,11 +23,13 @@ var_dump($row);
 			<?php if($id == ""): ?>
 				<p>本のタイトル：<input type="text" name="name" value=""></p>
 				<p>著者：<input type="text" name="author" value=""></p>
+				<p>ジャンル：<input type="text" name="genre" value=""></p>
 				<p>在庫：<input type="text" name="stock" value=""></p>
 			<?php else: ?>
 				<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 				<p>本のタイトル：<input type="text" name="name" value="<?php echo $row['name']; ?>"></p>
 				<p>著者：<input type="text" name="author" value="<?php echo $row['author']; ?>"></p>
+				<p>ジャンル：<input type="text" name="genre" value="<?php echo $row['genre']; ?>"></p>
 				<p>在庫：<input type="text" name="stock" value="<?php echo $row['stock']; ?>"></p>
 			<?php endif; ?>
 				<p><input type="submit" value="送信"></p>
