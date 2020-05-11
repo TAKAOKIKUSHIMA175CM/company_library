@@ -28,16 +28,30 @@ if($get_page == "" || $get_page == 0) {
 	$get_page = 1;
 }
 
-$pages = $pdo->prepare('SELECT * FROM books LIMIT :min, 10');
-$min = ($get_page-1)*10;
-$pages->bindParam(':min', $min);
-$pages->execute();
-$rows = $pages->fetchAll();
+
+	$pages = $pdo->prepare('SELECT * FROM books ORDER BY id LIMIT :min, 10');
+	$min = ($get_page-1)*10;
+	$pages->bindParam(':min', $min);
+	$pages->execute();
+	$rows = $pages->fetchAll();
+
+$mess = "検索ワードを入力してください";
+
+if ($_POST['name'] != "") {
+	$search = $pdo->prepare("SELECT * FROM books WHERE concat(name, author) LIKE '%".$_POST['name']."%' ORDER BY id LIMIT :min, 10");
+	$min = ($get_page-1)*10;
+	$search->bindParam(':min', $min);
+	$search->execute();
+	$searches = $search->fetchAll();
+}
+
+
 
 // $id = $_GET['id'];
 
 $id = $_SESSION['id'];
 $id = htmlspecialchars($id);
+
 
 ?>
 
@@ -48,6 +62,10 @@ $id = htmlspecialchars($id);
 	<body>
 		<div class="message"><?php echo $message;?></div>
 		<h3>書籍一覧</h3>
+			<form action="/company_book_list.php" method="post">
+				<input type="text" name="name" placeholder="文字を入力してください" value="<?php echo $_POST['name']; ?>">
+				<input type="submit" name="search" value="検索">
+			</form>
 			<table>
 				<thead>
 					<tr>
@@ -60,7 +78,27 @@ $id = htmlspecialchars($id);
 						<td></td>
 					</tr>
 				</thead>
-		<?php foreach($rows as $row): ?>
+	<?php if ($_POST['name']): ?>
+		<?php foreach ($searches as $shs): ?>
+				<tbody>
+					<tr>
+						<td><?php echo $shs['id']; ?></td>
+						<td><?php echo $shs['name']; ?></td>
+						<td><a href="/company_book_genre.php?author=<?php echo $shs['author']; ?>"><?php echo $shs['author']; ?></a></td>
+						<td><a href="/company_book_genre.php?genre=<?php echo $shs['genre']; ?>"><?php echo $shs['genre']; ?></a></td>
+						<td><?php echo $shs['stock']; ?></td>
+						<td><a href="/company_book.php?id=<?php echo $shs['id']; ?>">編集</a></td>
+					<?php if($shs['stock'] == "" || $shs['stock'] <= 0): ?>
+						<td>在庫なし</td>
+					<?php else: ?>
+						<td><a href="/company_rent.php?book_id=<?php echo $shs['id']; ?>.&id=<?php echo $id; ?>">借りる</a></td>
+					<?php endif; ?>
+					</tr>
+				</tbody>
+		<?php endforeach; ?>
+	<?php else: ?>
+		<?php echo $mess;?>
+		<?php foreach ($rows as $row): ?>
 				<tbody>
 					<tr>
 						<td><?php echo $row['id']; ?></td>
@@ -77,6 +115,7 @@ $id = htmlspecialchars($id);
 					</tr>
 				</tbody>
 		<?php endforeach; ?>
+	<?php endif; ?>
 			</table>
 				<p><a href="/company_book.php">書籍新規登録</a></p>
 				<p><a href="/company_rent_list.php">貸出し中一覧</a></p>
