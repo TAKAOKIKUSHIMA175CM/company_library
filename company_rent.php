@@ -41,6 +41,7 @@ $rows = $sstmt->fetch(PDO::FETCH_ASSOC);
 			<input type="hidden" name="name" value="<?php echo $row['name']; ?>">
 			<input type="hidden" name="author" value="<?php echo $row['author']; ?>">
 			<input type="hidden" name="genre" value="<?php echo $row['genre']; ?>">
+			<input type="hidden" name="popularity" value="<?php echo $row['popularity']; ?>">
 			<input type="hidden" name="stock" value="<?php echo $row['stock']; ?>">
 
 			<input type="hidden" name="book_id" value="<?php echo $row['id']; ?>">

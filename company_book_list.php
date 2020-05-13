@@ -14,9 +14,22 @@ $message = htmlspecialchars($message);
 $stmt = $pdo->prepare('SELECT * FROM books');
 $stmt->execute();
 
-$count = $pdo->prepare('SELECT COUNT(*) FROM books');
-$count->execute();
-$cnt = $count->fetchColumn();
+$name = $_POST['name'];
+$get_word = $_GET['name'];
+
+if ($_POST['name']) {
+	$count = $pdo->prepare("SELECT COUNT(*) FROM books WHERE concat(name, author) LIKE '%".$_POST['name']."%'");
+	$count->execute();
+	$cnt = $count->fetchColumn();
+} elseif ($get_word) {
+	$count = $pdo->prepare("SELECT COUNT(*) FROM books WHERE concat(name, author) LIKE '%$get_word%'");
+	$count->execute();
+	$cnt = $count->fetchColumn();
+} else {
+	$count = $pdo->prepare('SELECT COUNT(*) FROM books');
+	$count->execute();
+	$cnt = $count->fetchColumn();
+}
 
 if(is_float($cnt/10)) {
 	$page = floor($cnt/10);
@@ -28,44 +41,52 @@ if($get_page == "" || $get_page == 0) {
 	$get_page = 1;
 }
 
+$mess = "検索ワードを入力してください";
 
+if ($name != "") {
+	$search = $pdo->prepare("SELECT * FROM books WHERE concat(name, author) LIKE '%$name%' LIMIT :min, 10");
+	$min = ($get_page-1)*10;
+	$search->bindParam(':min', $min);
+	$search->execute();
+	$searches = $search->fetchAll();
+}
+if ($get_word) {
+	$search = $pdo->prepare("SELECT * FROM books WHERE concat(name, author) LIKE '%$get_word%' LIMIT :min, 10");
+	$min = ($get_page-1)*10;
+	$search->bindParam(':min', $min);
+	$search->execute();
+	$searches = $search->fetchAll();
+
+		
+}
 	$pages = $pdo->prepare('SELECT * FROM books ORDER BY id LIMIT :min, 10');
 	$min = ($get_page-1)*10;
 	$pages->bindParam(':min', $min);
 	$pages->execute();
 	$rows = $pages->fetchAll();
 
-$mess = "検索ワードを入力してください";
-
-if ($_POST['name'] != "") {
-	$search = $pdo->prepare("SELECT * FROM books WHERE concat(name, author) LIKE '%".$_POST['name']."%' ORDER BY id LIMIT :min, 10");
-	$min = ($get_page-1)*10;
-	$search->bindParam(':min', $min);
-	$search->execute();
-	$searches = $search->fetchAll();
-}
-
-
-
-// $id = $_GET['id'];
-
 $id = $_SESSION['id'];
 $id = htmlspecialchars($id);
-
-
 ?>
 
 <html>
 	<head>
-		company_book_list.php
+		<title>company_book_list.php</title>
 	</head>
 	<body>
 		<div class="message"><?php echo $message;?></div>
 		<h3>書籍一覧</h3>
+		<?php if ($name): ?>
+			<form action="/company_book_list.php?name=<?php echo $get_word; ?>" method="post">
+				<input type="text" name="name" value="<?php echo $name; ?>">
+				<input type="submit" value="検索">
+			</form>
+		<?php else: ?>
 			<form action="/company_book_list.php" method="post">
-				<input type="text" name="name" placeholder="文字を入力してください" value="<?php echo $_POST['name']; ?>">
+				<input type="text" name="name" placeholder="検索ワードを入力してください" value="<?php echo $name; ?>">
 				<input type="submit" name="search" value="検索">
 			</form>
+		<?php endif; ?>
 			<table>
 				<thead>
 					<tr>
@@ -78,7 +99,7 @@ $id = htmlspecialchars($id);
 						<td></td>
 					</tr>
 				</thead>
-	<?php if ($_POST['name']): ?>
+	<?php if ($_POST['name'] || $get_word): ?>
 		<?php foreach ($searches as $shs): ?>
 				<tbody>
 					<tr>
@@ -122,7 +143,11 @@ $id = htmlspecialchars($id);
 				<p><a href="company_rent_history.php">貸出し履歴</a></p>
 				<p><a href="company_user_history.php">マイページへ</a></p>
 		<?php for($i = 1; $i <= $page; $i++): ?>
-			<a href="/company_book_list.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+			<?php if ($get_word): ?>
+				<a href="/company_book_list.php?page=<?php echo $i; ?>&name=<?php echo $get_word; ?>"><?php echo $i; ?></a>
+			<?php else: ?>
+				<a href="/company_book_list.php?page=<?php echo $i; ?>&name=<?php echo $name; ?>"><?php echo $i; ?></a>
+			<?php endif; ?>
 		<?php endfor; ?>
 	</body>
 </html>

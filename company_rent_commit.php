@@ -16,15 +16,17 @@ $book_name = $_POST['name'];
 $author = $_POST['author'];
 $genre = $_POST['genre'];
 $stock = $_POST['stock'];
+$popularity = $_POST['popularity'];
 $rent_flag = $_POST['rent_flag'];
 $login_flag = $_POST['login_flag'];
 
 $book_stmt = $pdo->prepare('SELECT name FROM books');
 $book_stmt->execute();
 
-$stock_stmt = $pdo->prepare('UPDATE books SET stock = :stock WHERE id = :book_id');
+$stock_stmt = $pdo->prepare('UPDATE books SET stock = :stock, popularity = :popularity WHERE id = :book_id');
 $stock_stmt->bindParam(':book_id', $id);
 $stock_stmt->bindParam(':stock', $stock);
+$stock_stmt->bindParam(':popularity', $popularity);
 $stock_stmt->execute();
 
 $stmt = $pdo->prepare('INSERT INTO rents (return_at, num, user_id, book_id, rent_flag) VALUES (:return_at, :num, :user_id, :book_id, :rent_flag)');
@@ -61,6 +63,7 @@ var_dump($row);
 					<td><?php echo $book_name; ?></td>
 					<td><?php echo $return_at; ?></td>
 					<td><?php echo $num; ?></td>
+					<td><?php echo $popularity; ?></td>
 				</tr>
 			</tbody>
 		</table>

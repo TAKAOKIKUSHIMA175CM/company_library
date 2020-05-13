@@ -19,11 +19,17 @@ $book_name = $_POST['name'];
 $author = $_POST['author'];
 $genre = $_POST['genre'];
 $stock = $_POST['stock'];
+$popularity = $_POST['popularity'];
+
 
 if ($no_stock = $stock - $num < 0) {
 	echo "在庫が足りません";
 } else {
 	$stocks = $stock - $num;
+}
+
+if (isset($stocks)) {
+	$popularity_num = $popularity + $num;
 }
 
 ?>
@@ -67,8 +73,9 @@ if ($no_stock = $stock - $num < 0) {
 			<input type="hidden" name="author" value="<?php echo $author; ?>">
 			<input type="hidden" name="genre" value="<?php echo $genre; ?>">
 			<input type="hidden" name="stock" value="<?php echo $stocks; ?>">
+			<input type="hidden" name="popularity" value="<?php echo $popularity_num; ?>">
 
-			<input type="submit" value="送信">
+			<input type="submit" name="send" value="送信">
 		</form>
 	<?php endif; ?>
 	</body>
