@@ -67,6 +67,15 @@ if ($get_word) {
 
 $id = $_SESSION['id'];
 $id = htmlspecialchars($id);
+
+$rank = $pdo->prepare("SELECT * FROM books ORDER BY popularity DESC LIMIT 5");
+$rank->execute();
+$rankin = $rank->fetchAll();
+
+if ($rankin)
+$ranking = array('１位', '２位', '３位', '４位', '５位');
+$ranking++;
+
 ?>
 
 <html>
@@ -149,6 +158,34 @@ $id = htmlspecialchars($id);
 				<a href="/company_book_list.php?page=<?php echo $i; ?>&name=<?php echo $name; ?>"><?php echo $i; ?></a>
 			<?php endif; ?>
 		<?php endfor; ?>
+
+		<h4>レンタルランキング</h4>
+			<table>
+				<thead>
+					<tr>
+						<td>ランキング</td>
+						<td>タイトル</td>
+						<td>著者</td>
+						<td>ジャンル</td>
+						<td>在庫</td>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($rankin as $ranker): ?>
+						<tr>
+							<th>
+								<?php foreach ($ranking as $ran): ?>
+									<?php echo $ran[1]; ?>
+								<?php endforeach; ?>
+							</th>
+							<td><?php echo $ranker['name']; ?></td>
+							<td><?php echo $ranker['author']; ?></</td>
+							<td><?php echo $ranker['genre']; ?></td>
+							<td><?php echo $ranker['stock']; ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
 	</body>
 </html>
 
